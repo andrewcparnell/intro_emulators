@@ -67,7 +67,7 @@ The usual approach is:
 1. Specify a few design points $x^*$ at which to run $f$. Obtain $y^* = f(x^*)$
 1. Fit a _Gaussian Process_ to the outputs 
 1. Use the Gaussian Process to predict where the biggest uncertainties are to specify your next set of design points
-1. Repeat from 3. until you have used up all your runs
+1. Repeat from 3 until you have used up all your runs
 
 The final Gaussian Process can be used as the emulator and the simulator can be thrown away!
 
@@ -79,7 +79,7 @@ The final Gaussian Process can be used as the emulator and the simulator can be 
 x_star = seq(0, 1, length = 5)
 y_star = f(x_star)
 library(GPfit)
-f_hat = GP_fit(x_star, y_star, nug_thres = 10)
+f_hat = GP_fit(x_star, y_star)
 x_new = seq(0, 1, length = 100)
 pred = predict(f_hat ,x_new)
 ```
@@ -100,7 +100,7 @@ lines(x_new, pred$Y_hat + 2*sqrt(pred$MSE), lty = 2, col = 'red')
 ```{r}
 x_star = c(x_star, x_new[which.max(pred$MSE)])
 y_star = c(y_star, f(x_star[6]))
-f_hat = GP_fit(x_star, y_star, nug_thres = 10)
+f_hat = GP_fit(x_star, y_star)
 x_new = seq(0, 1, length = 100)
 pred = predict(f_hat ,x_new)
 ```
@@ -133,7 +133,7 @@ $$y|x \sim MVN (\mu 1, \Sigma);\; \Sigma_{ij} = \tau^2 \rho_\phi(x_i - x_j)^2$$
 
  - The GP has a wonderful formula for prediction:
 
-$$\hat{y}^* | y \sim MVN(\mu 1 + \Sigma^* (\Sigma^{**})^{-1} (y - \mu 1), \Sigma - \Sigma^* (\Sigma^{**})^{-1} (\Sigma^*)^T)$$
+$$\hat{y}^* | y \sim MVN(\mu 1 + \Sigma^* \Sigma^{-1} (y - \mu 1), \Sigma^{**} - \Sigma^* \Sigma^{-1} (\Sigma^*)^T)$$
 
 - Here $\Sigma^*$ and $\Sigma^{**}$ are the covariance matrix of the prediction points and their variance respectively
 
@@ -141,7 +141,7 @@ $$\hat{y}^* | y \sim MVN(\mu 1 + \Sigma^* (\Sigma^{**})^{-1} (y - \mu 1), \Sigma
 
 ## Why Gaussian processes?
 
-- There is nothing special about the fact that it's a Gaussian Process used here. Any statistical model that can produce predictions with quantified uncertainties should be ok
+- There is nothing special about the fact that it's a Gaussian Process used here. Any statistical model that can produce predictions with quantified uncertainties should be OK
 
 - The nice thing about GPs is that they are smooth which often matches the differential equations underlying the simulator
 
@@ -167,7 +167,7 @@ $$\hat{y}^* | y \sim MVN(\mu 1 + \Sigma^* (\Sigma^{**})^{-1} (y - \mu 1), \Sigma
 
 - In 4 input dimensions I need the starting values to cover the space well
 
-- Use a latin hypercube design
+- Use a Latin hypercube design
 
 - (NB: the `GP_fit` function requires all input values to be scaled between 0 and 1)
 
