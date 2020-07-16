@@ -3,7 +3,7 @@ title: 'An introduction to stochastic emulation'
 author: Andrew Parnell \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
   \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
   \newline \vspace{1cm}
-  https://andrewcparnell.github.io/intro_emulators
+  https://github.com/andrewcparnell/intro_emulators
 output:
   beamer_presentation:
     includes:
