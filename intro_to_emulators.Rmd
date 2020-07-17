@@ -122,7 +122,7 @@ lines(x_new, pred$Y_hat + 2*sqrt(pred$MSE), lty = 2, col = 'red')
 
 - This is the model:
 
-$$y|x \sim MVN (\mu 1, \Sigma);\; \Sigma_{ij} = \tau^2 \rho_\phi(x_i - x_j)^2$$
+$$y|x \sim MVN (\mu 1, \Sigma);\; \Sigma_{ij} = \tau^2 \rho_\phi(\| x_i - x_j\| )$$
 
 - So there are 3 parameters: $\mu, \phi, \tau$
 - The parameter $\tau^2$ controls the variance of the Gaussian process (bigger values have more uncertainty)
