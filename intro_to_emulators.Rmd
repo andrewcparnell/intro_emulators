@@ -177,7 +177,7 @@ $$\hat{y}^* | y \sim MVN(\mu 1 + \Sigma^* \Sigma^{-1} (y - \mu 1), \Sigma^{**} -
 
 1. File `run_simulator.R`
 
-1. File `build_emulator_*.R`
+1. File `build_emulator_lt1.R`
 
 1. File `out_lt1.txt`
 
