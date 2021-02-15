@@ -1,0 +1,137 @@
+---
+title: 'An introduction to emulation'
+author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
+  \newline \vspace{1cm}
+  https://github.com/andrewcparnell/intro_emulators
+output:
+  beamer_presentation:
+    includes:
+      in_header: header.tex
+classoption: "aspectratio=169"
+editor_options: 
+  chunk_output_type: console
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf', fig.height = 4, fig.align = 'center')
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+set.seed(123)
+library(ggplot2)
+```
+
+## Introduction
+
+- In this course I aim to teach you how to start with a complicated and slow mathematical model and create a very fast  shortcut to it
+
+- This statistical shortcut is known as an __emulator__ and is built using machine learning techniques
+
+- If your emulator is really good you never need your original mathematical model
+
+- Examples include: climate models, power plants, bombs, biological systems, etc
+
+- The course is broken into 5 parts: designing, building, checking, deploying, extending
+
+## Terminology
+
+- The original mathematical model you want to emulate is called a __simulator__
+
+- The simulator has inputs ($X$) and outputs ($Y$)
+
+- The shortcut to the simulator is called an __emulator__
+
+- If the simulator $f$ gives you $Y = f(X)$, then the emulator gives you $\hat{Y} = \hat{f}(X)$
+
+- The statistical method we use to fit the model is called a __Gaussian Process__
+
+- Emulators are sometimes called __code surrogates__
+
+- The general topic is often known as __uncertainty quantification (UQ)__ or __design and analysis of computer experiments (DACE)__
+
+## A simulator
+
+Here is a simple simulator:
+
+```{r}
+f <- function(x1, x2) {
+  return(10 * sin(pi * x1 * x2))
+}
+```
+
+We will define it on $x_1, x_2 \in (0,1)$ and use it with:
+
+```{r}
+f(0.7, 0.7)
+```
+
+## Understanding the simulator
+
+```{r, echo = FALSE, out.width = "100%"}
+n <- 100 # Number of data points
+x1 <- x2 <- seq(0, 1, length.out = n) # Range of x1 and x2
+X <- expand.grid(x1, x2) # Expand to have all combinations of x1 and x2
+df <-
+  data.frame(
+    x1 = X[, 1],
+    x2 = X[, 2],
+    y = f(X[, 1], X[, 2])
+  ) # Turn into a data frame for plotting
+
+# Contour plot using ggplot
+ggplot(df, aes(x1, x2, z = y)) +
+  geom_contour_filled()
+```
+
+## Assumptions
+
+  - You can run the simulator a few times but now too many as they are usually slow to run (which is why you want an emulator)
+  - The outputs of the simulator are identical for the same inputs; it is a __deterministic__ simulator
+  - The outputs of the simulator are smooth, i.e. similar for similar values of the inputs
+
+## Overview of the process
+
+ 1. We first run the simulator at a few well chosen input values to explore the full input space. The input values are usually chosen using methods from the field of design of experiments
+ 1. We use Gaussian Processes (a type of machine learning technique) to approximate the output values at these inputs values. The fitted Gaussian Process becomes our emulator
+ 1. We check the emulator using graphs and cross validation
+ 1. (Optionally) we calibrate the emulator with real data
+ 1. We deploy the emulator in a manner suitable for its use
+ 
+## Some good books/resources (with hyperlinks)
+
+- You need to have completed the [Rfternoon](https://andrewcparnell.github.io/Rfternoon/) series of introductory R lectures
+
+- There is a free book: [The Design and Analysis of Computer Experiments](https://www.asc.ohio-state.edu/santner.1/TJS-BJW-WIN/master-driver.pdf) by Santner, Williams, and Notz
+
+- There are lots of R packages: 
+
+    - [`GPfit`](https://cran.r-project.org/web/packages/GPfit/index.html)
+    - [`emulator`](https://cran.r-project.org/web/packages/emulator/index.html)
+    - [`SAVE`](https://cran.r-project.org/web/packages/SAVE/index.html)
+    - [`DiceKriging`](https://cran.r-project.org/web/packages/DiceKriging/index.html)
+    
+## Example 2: A more complex simulator: 2D temperature diffusion
+
+```{r, out.width="40%", echo = FALSE, fig.show = 'hold'}
+knitr::include_graphics(c('PastedGraphic-2.png','PastedGraphic-3.png'))
+```
+
+## Example 2 continued
+
+The 2D temperature diffusion is based on the following equation:
+
+  $$\frac{\partial T}{\partial t} = \mathscr{D} \nabla^2 T$$
+  
+We provide the temperature ($T$) at the top, bottom, left and right of a grid, define the diffusivity. 
+
+We then run the simulation for 1 second and record the temperature at the centre of the domain
+
+## Summary
+
+- We have a slow simulator that we want to avoid running as much as possible
+
+- We run it a few times and use a Gaussian Process to build an emulator of it
+
+- We use the emulator in place of the simulator 
+
+- Next: choosing which values to run the simulator at
