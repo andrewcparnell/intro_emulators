@@ -8,7 +8,7 @@ Sessions:
 
  1. Overview | [stream video](https://github.com) | [download video](https://github.com) 
  2. Emulators and Design | [stream video](https://github.com) | [download video](https://github.com) 
- 3. Building Emulator | [stream video](https://github.com) | [download video](https://github.com) 
+ 3. Building Emulators | [stream video](https://github.com) | [download video](https://github.com) 
  4. Plotting, Checking, and Calibrating Emulators | [stream video](https://github.com) | [download video](https://github.com) 
  5. Deploying and Extending the Emulator | [stream video](https://github.com) | [download video](https://github.com) 
 
