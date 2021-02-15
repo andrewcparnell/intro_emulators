@@ -1,5 +1,5 @@
 ---
-title: 'An introduction to emulation'
+title: 'Introduction to Emulators'
 author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
   \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
   \newline \vspace{1cm}
@@ -15,15 +15,15 @@ urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(dev = 'pdf', fig.height = 4, fig.align = 'center')
-par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+knitr::opts_chunk$set(dev = "pdf", fig.height = 4, fig.align = "center")
+par(mar = c(3, 3, 2, 1), mgp = c(2, .7, 0), tck = -.01, las = 1)
 set.seed(123)
 library(ggplot2)
 ```
 
 ## Introduction
 
-- In this course I aim to teach you how to start with a complicated and slow mathematical model and create a very fast  shortcut to it
+- In this course I aim to teach you how to start with a complicated and slow mathematical model and create a very fast shortcut to it
 
 - This statistical shortcut is known as an __emulator__ and is built using machine learning techniques
 
@@ -113,7 +113,7 @@ ggplot(df, aes(x1, x2, z = y)) +
 ## Example 2: A more complex simulator: 2D temperature diffusion
 
 ```{r, out.width="40%", echo = FALSE, fig.show = 'hold'}
-knitr::include_graphics(c('PastedGraphic-2.png','PastedGraphic-3.png'))
+knitr::include_graphics(c("PastedGraphic-2.png", "PastedGraphic-3.png"))
 ```
 
 ## Example 2 continued
