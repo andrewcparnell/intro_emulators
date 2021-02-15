@@ -1,5 +1,5 @@
 ---
-title: 'Plotting, checking, and calibrating Emulators'
+title: 'Plotting, Checking, and Calibrating Emulators'
 author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
   \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
   \newline \vspace{1cm}

@@ -1,5 +1,5 @@
 ---
-title: 'Deploying and extending the Emulator'
+title: 'Deploying and Extending the Emulator'
 author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
   \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
   \newline \vspace{1cm}
