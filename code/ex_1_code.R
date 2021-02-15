@@ -42,11 +42,11 @@ ggplot(df, aes(x1, x2, z = y)) +
 # I'm going to support I can afford to run the simulator twenty times (ignore the fact I just ran it 10,000 times above!)
 
 # Choose the number of runs I want to do
-n_grid <- 20
+n_runs <- 20
 n_inputs <- 2
 
 # Now choose my initial grid using a latin hypercube design
-initial_grid <- maximinLHS(n_grid, n_inputs)
+initial_grid <- maximinLHS(n_runs, n_inputs)
 df_grid <- data.frame(
   x1 = initial_grid[, 1],
   x2 = initial_grid[, 2]
@@ -59,10 +59,10 @@ ggplot(df_grid, aes(x = x1, y = x2)) +
 
 # Run the simulator at these values
 # Create a container to hold the outputs
-df_grid$out <- rep(NA, length = n_grid)
+df_grid$out <- rep(NA, length = n_runs)
 
 # Now run it
-for (i in 1:n_grid) {
+for (i in 1:n_runs) {
   df_grid$out[i] <- f(initial_grid[i, 1], initial_grid[i, 2])
 }
 
@@ -104,8 +104,8 @@ ggplot(df_new, aes(x1, x2, z = se)) +
 # Method 2 - run some cross validations
 # This is leave one out cross validation
 # Remove one of the points, re-fit the GP and then see how badly it did
-loo_fit <- rep(NA, n_grid)
-for (i in 1:n_grid) {
+loo_fit <- rep(NA, n_runs)
+for (i in 1:n_runs) {
   # Fit an emulator with one point missing
   curr_emulator <- GP_fit(
     df_grid[-i, 1:n_inputs],

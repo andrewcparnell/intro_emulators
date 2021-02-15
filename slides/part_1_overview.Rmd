@@ -65,6 +65,8 @@ We will define it on $x_1, x_2 \in (0,1)$ and use it with:
 f(0.7, 0.7)
 ```
 
+(All the code for the examples we use is in the `code` folder on GitHub)
+
 ## Understanding the simulator
 
 ```{r, echo = FALSE, out.width = "100%"}
@@ -110,21 +112,23 @@ ggplot(df, aes(x1, x2, z = y)) +
     - [`SAVE`](https://cran.r-project.org/web/packages/SAVE/index.html)
     - [`DiceKriging`](https://cran.r-project.org/web/packages/DiceKriging/index.html)
     
-## Example 2: A more complex simulator: 2D temperature diffusion
+- And a Python package
+
+    - [`GP_emulator`](https://gp-emulator.readthedocs.io/en/latest/)
+    
+## Example 2: 2D steady-state Navier-Stokes flow
 
 ```{r, out.width="40%", echo = FALSE, fig.show = 'hold'}
-knitr::include_graphics(c("PastedGraphic-2.png", "PastedGraphic-3.png"))
+knitr::include_graphics(c("NS_1.png", "NS_2.png"))
 ```
 
 ## Example 2 continued
 
-The 2D temperature diffusion is based on the following equation:
+This is a steady-state incompressible Newtonian isothermal laminar Navier-Stokes model
 
-  $$\frac{\partial T}{\partial t} = \mathscr{D} \nabla^2 T$$
-  
-We provide the temperature ($T$) at the top, bottom, left and right of a grid, define the diffusivity. 
+$$ \mathbf{\nabla \cdot \mathit{v}} = 0;\; \frac{\partial \mathit{v}}{\partial t} + \mathbf{\nabla \cdot (\mathit{v} \mathit{v})} = \nu \mathbf{\nabla^2 \mathit{v}} - \frac{1}{\rho} \mathbf{\nabla} p + \mathbf{g}$$
 
-We then run the simulation for 1 second and record the temperature at the centre of the domain
+... where $\nu$ (velocity vector field) and $p$ (pressure field) are the primary variables/unknowns
 
 ## Summary
 

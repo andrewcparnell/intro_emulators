@@ -1,0 +1,258 @@
+---
+title: 'Plotting, checking, and calibrating Emulators'
+author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
+  \newline \vspace{1cm}
+  https://github.com/andrewcparnell/intro_emulators
+output:
+  beamer_presentation:
+    includes:
+      in_header: header.tex
+classoption: "aspectratio=169"
+editor_options: 
+  chunk_output_type: console
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = "pdf", out.width = "80%", fig.align = "center")
+par(mar = c(3, 3, 2, 1), mgp = c(2, .7, 0), tck = -.01, las = 1)
+set.seed(123)
+library(ggplot2)
+library(gridExtra)
+library(GPfit)
+library(lhs)
+f <- function(x1, x2) {
+  stopifnot(x1 >= 0 & x1 <= 1) # Range of x1 is (0,1)
+  stopifnot(x2 >= 0 & x2 <= 1) # Same for x2
+  return(10 * sin(pi * x1 * x2)) # Simulator function
+}
+```
+
+## Introduction
+
+- We now have a shiny and very fast emulator for our simulator
+
+- But how do we know whether it works well?
+
+- In this section we will go through some simple plots that work in both low and high dimensional problems
+
+- We will then discuss some performance measures that enable us to judge whether the emulator is fitting well or not
+
+It is helpful for this section to revise the use of `ggplot2`; see the [Rfternoon](https://andrewcparnell.github.io/Rfternoon/) course for a revision class
+
+
+## Reminder: Navier-Stokes example
+
+Recall our 2D Navier-Stokes example with 3 inputs and 1 output:
+
+```{r, out.width="40%", echo = FALSE, fig.show = 'hold'}
+knitr::include_graphics(c("NS_1.png", "NS_2.png"))
+```
+
+## Plotting the output
+
+- One way of creating a neat plot is to fix all the variables but one or two
+- We can then produce a plot of the remaining variable(s) changing across its range of values according to the emulator
+- Suppose for example that we were just interested in the variable `kinematicViscosity`, we could fix the others at chosen values (e.g. 0.5) and then predict across the chosen variable
+- We could extend this to look at two dimensions whilst holding the other fixed
+- With further plotting magic we could add slider bars or an animation to look at the effect of changing the input values
+
+## A 1D marginal plot
+
+```{r, echo = FALSE}
+emulator <- readRDS(file = "../simulator/elbowFlow2d/emulator_run.rds")
+x1_new <- 0.5
+x2_new <- 0.5
+x3_new <- seq(0, 1, length = 100)
+X_new <- matrix(NA, nrow = 100, ncol = 3)
+X_new[, 1] <- x1_new
+X_new[, 2] <- x2_new
+X_new[, 3] <- x3_new
+
+# Now create predictions everywhere
+pred <- predict(emulator, X_new)
+
+# Create a new data frame for plotting
+df_new <- data.frame(
+  largeInletVelocityMagnitude = X_new[, 1],
+  smallInletVelocityMagnitude = X_new[, 2],
+  kinematicViscosity = X_new[, 3] * (1e-5 - 1e-3) + 1e-3,
+  yhat = pred$Y_hat
+)
+ggplot(df_new, aes(x = kinematicViscosity, y = yhat)) +
+  geom_line() +
+  ggtitle("Large inlet and Small inlet velocities fixed at 0.5")
+```
+
+## A 2D marginal plot
+
+```{r, echo = FALSE}
+# Next try varying two parameters and fixing the other
+x1_new <- seq(0, 1, length = 100)
+x3_new <- seq(0, 1, length = 100)
+x_new <- expand.grid(x1_new, x3_new)
+# Now vary temperature left across this field
+X_new <- matrix(NA,
+  nrow = nrow(x_new),
+  ncol = 3
+)
+# Replace the first column with the varying variable
+X_new[, 1] <- x_new[, 1]
+X_new[, 2] <- 0.5
+X_new[, 3] <- x_new[, 2]
+
+# Now create predictions everywhere
+pred <- predict(emulator, X_new)
+
+# Create a new data frame for plotting
+df_new <- data.frame(
+  largeInletVelocityMagnitude = X_new[, 1],
+  smallInletVelocityMagnitude = X_new[, 2],
+  kinematicViscosity = X_new[, 3] * (1e-5 - 1e-3) + 1e-3,
+  yhat = pred$Y_hat
+)
+
+ggplot(df_new, aes(x = largeInletVelocityMagnitude, y = kinematicViscosity, z = yhat)) +
+  geom_contour_filled() +
+  labs(fill = "Velocity") +
+  ggtitle("Small inlet velocity fixed at 0.5")
+```
+
+## Further plots
+
+- These marginal plots give us some idea as to the behaviour of a subset of the variables when others are fixed
+
+- But the Gaussian Processes also produces an estimate of the error and we can use this too
+
+- We can plot these alongside the marginal plots to give an idea of places where the emulator is performing poorly
+
+## 1D marginal error plot
+
+```{r, echo = FALSE}
+emulator <- readRDS(file = "../simulator/elbowFlow2d/emulator_run.rds")
+x1_new <- 0.5
+x2_new <- 0.5
+x3_new <- seq(0, 1, length = 100)
+X_new <- matrix(NA, nrow = 100, ncol = 3)
+X_new[, 1] <- x1_new
+X_new[, 2] <- x2_new
+X_new[, 3] <- x3_new
+
+# Now create predictions everywhere
+pred <- predict(emulator, X_new)
+
+# Create a new data frame for plotting
+df_new <- data.frame(
+  largeInletVelocityMagnitude = X_new[, 1],
+  smallInletVelocityMagnitude = X_new[, 2],
+  kinematicViscosity = X_new[, 3] * (1e-5 - 1e-3) + 1e-3,
+  yhat = pred$Y_hat,
+  ylow = pred$Y_hat - 1.96 * sqrt(pred$MSE),
+  yhigh = pred$Y_hat + 1.96 * sqrt(pred$MSE)
+)
+ggplot(df_new, aes(x = kinematicViscosity, y = yhat)) +
+  geom_line() +
+  ggtitle("Large inlet and Small inlet velocities fixed at 0.5") +
+  geom_line(aes(y = ylow), linetype = "dotted") +
+  geom_line(aes(y = yhigh), linetype = "dotted")
+```
+
+## 2D marginal error plot
+
+```{r, echo = FALSE}
+# Next try varying two parameters and fixing the other
+x1_new <- seq(0, 1, length = 100)
+x3_new <- seq(0, 1, length = 100)
+x_new <- expand.grid(x1_new, x3_new)
+# Now vary temperature left across this field
+X_new <- matrix(NA,
+  nrow = nrow(x_new),
+  ncol = 3
+)
+# Replace the first column with the varying variable
+X_new[, 1] <- x_new[, 1]
+X_new[, 2] <- 0.5
+X_new[, 3] <- x_new[, 2]
+
+# Now create predictions everywhere
+pred <- predict(emulator, X_new)
+
+# Create a new data frame for plotting
+df_new <- data.frame(
+  largeInletVelocityMagnitude = X_new[, 1],
+  smallInletVelocityMagnitude = X_new[, 2],
+  kinematicViscosity = X_new[, 3] * (1e-5 - 1e-3) + 1e-3,
+  RMSE = sqrt(pred$MSE)
+)
+
+ggplot(df_new, aes(x = largeInletVelocityMagnitude, y = kinematicViscosity, z = RMSE)) +
+  geom_contour_filled() +
+  labs(fill = "RMSE") +
+  ggtitle("Small inlet velocity fixed at 0.5")
+```
+
+## Cross validation
+
+- An even better way of judging whether the emulator is working is to use __Cross Validation (CV)__
+
+- This works by removing some of the data that the model was trained on, re-fitting the emulator, and predicting for the left out observations
+
+- If the emulator can predict the left out observations well then it is doing a good job
+
+- We usually plot the predictions from the left out data against the true observations. If they follow an identity relationship then the emulator is working well
+
+## Leave one out CV code
+
+```{r, eval = FALSE}
+loo_fit <- rep(NA, n_runs)
+for (i in 1:n_runs) {
+  print(i)
+  # Fit an emulator with one point missing
+  curr_emulator <- GP_fit(
+    initial_grid[-i, ],
+    df_grid$out[-i]
+  )
+  # Get the prediction for the missing point
+  loo_fit[i] <- predict(
+    curr_emulator,
+    initial_grid[i, , drop = FALSE]
+  )$Y_hat
+}
+```
+
+## Leave one out CV results
+
+```{r, echo = FALSE}
+loo_fit <- readRDS(file = "../simulator/elbowFlow2d/loo_fits.rds")
+df_grid <- readRDS(file = "../simulator/elbowFlow2d/simulator_run.rds")
+qplot(loo_fit, df_grid$out, geom = "point") +
+  geom_abline() +
+  xlab("LOO-CV fitted value") +
+  ylab("True value")
+```
+
+## Calibrating the emulator will real-world observations
+
+- Sometimes in addition to the emulator values we also have real-world on the process
+
+- We thus want to check whether the real world data match the emulator and whether there are systematic biases
+
+- The usual equation people fit is:
+
+$$y(X) = m(X) + \delta(X) + \epsilon$$
+
+- Where $X$ are our inputs and $y$ our output
+- $m$ is the emulator (already fitted)
+- $\delta(x)$ is another GP representing systematic bias
+- $\epsilon$ is a pure noise error term representing observation error
+
+- You will need to take another module (on Bayesian Modelling) to fit these kind of models!
+
+## Summary
+
+- We can create marginal 1D and 2D plots to check how well our emulator fits
+
+- We can also run cross-validation to check out of sample performance
+
+- Next (and finally): deploying the emulator and making it useful
