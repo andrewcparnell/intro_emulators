@@ -1,6 +1,6 @@
 # Introduction to Emulation
 
-Welcome to a very short course that covers introductory emulation using R. 
+Welcome to a short course that covers introductory emulation using R. 
 
 All the slides for the course are available in pdf format in the `slides` folder. The videos associated with the slides are shown below, and the code in the `code` folder.
 
