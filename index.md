@@ -6,11 +6,11 @@ All the slides for the course are available in pdf format in the `slides` folder
 
 Sessions:
 
- 1. Overview | [stream video](https://github.com) | [download video](https://github.com) 
- 2. Emulators and Design | [stream video](https://github.com) | [download video](https://github.com) 
- 3. Building Emulators | [stream video](https://github.com) | [download video](https://github.com) 
- 4. Plotting, Checking, and Calibrating Emulators | [stream video](https://github.com) | [download video](https://github.com) 
- 5. Deploying and Extending the Emulator | [stream video](https://github.com) | [download video](https://github.com) 
+ 1. Overview - [stream video](https://github.com) - [download video](https://github.com) 
+ 2. Emulators and Design - [stream video](https://github.com) - [download video](https://github.com) 
+ 3. Building Emulators - [stream video](https://github.com) - [download video](https://github.com) 
+ 4. Plotting, Checking, and Calibrating Emulators - [stream video](https://github.com) - [download video](https://github.com) 
+ 5. Deploying and Extending the Emulator - [stream video](https://github.com) - [download video](https://github.com) 
 
 You should watch the videos above first and then try to follow the code by downloading the software and running it yourself whilst watching the videos. 
 
