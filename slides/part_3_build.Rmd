@@ -3,7 +3,7 @@ title: 'Building Emulators'
 author: Andrew Parnell and Philip Cardiff \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
   \newline \includegraphics[width=3cm]{maynooth_uni_logo.jpg}
   \newline \vspace{1cm}
-  https://github.com/andrewcparnell/intro_emulators
+  https://andrewcparnell.github.io/intro_emulators/
 output:
   beamer_presentation:
     includes:
