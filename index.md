@@ -6,11 +6,11 @@ All the slides for the course are available in pdf format in the [`slides`](http
 
 Sessions:
 
- 1. Overview - [stream video](https://media.heanet.ie/page/34a0a93694db46e7ba6f700bd6e5a188) - [download video](https://media.heanet.ie/download/34a0a93694db46e7ba6f700bd6e5a188) 
- 2. Emulators and Design - [stream video](https://media.heanet.ie/page/749aa3decd294c5cb683cff4b2536f97) - [download video](https://media.heanet.ie/download/749aa3decd294c5cb683cff4b2536f97) 
- 3. Building Emulators - [stream video](https://media.heanet.ie/page/812b8cde14024ec2add9ebe2838f27f3) - [download video](https://media.heanet.ie/download/812b8cde14024ec2add9ebe2838f27f3) 
- 4. Plotting, Checking, and Calibrating Emulators - [stream video](https://media.heanet.ie/page/7b5bae854f1c409ea98a30e10be73a95) - [download video](https://media.heanet.ie/download/7b5bae854f1c409ea98a30e10be73a95) 
- 5. Deploying and Extending the Emulator - [stream video](https://media.heanet.ie/page/c2a08463d0244f6094e0a36c55888712) - [download video](https://media.heanet.ie/download/c2a08463d0244f6094e0a36c55888712) 
+ 1. Overview (17 mins) - [stream video](https://media.heanet.ie/page/34a0a93694db46e7ba6f700bd6e5a188) - [download video](https://media.heanet.ie/download/34a0a93694db46e7ba6f700bd6e5a188) 
+ 2. Emulators and Design (17 mins) - [stream video](https://media.heanet.ie/page/749aa3decd294c5cb683cff4b2536f97) - [download video](https://media.heanet.ie/download/749aa3decd294c5cb683cff4b2536f97) 
+ 3. Building Emulators (24 mins) - [stream video](https://media.heanet.ie/page/812b8cde14024ec2add9ebe2838f27f3) - [download video](https://media.heanet.ie/download/812b8cde14024ec2add9ebe2838f27f3) 
+ 4. Plotting, Checking, and Calibrating Emulators (18 mins) - [stream video](https://media.heanet.ie/page/7b5bae854f1c409ea98a30e10be73a95) - [download video](https://media.heanet.ie/download/7b5bae854f1c409ea98a30e10be73a95) 
+ 5. Deploying and Extending the Emulator (10 mins) - [stream video](https://media.heanet.ie/page/c2a08463d0244f6094e0a36c55888712) - [download video](https://media.heanet.ie/download/c2a08463d0244f6094e0a36c55888712) 
 
 You should watch the videos above first and then try to follow the code by downloading the software and running it yourself whilst watching the videos. 
 
