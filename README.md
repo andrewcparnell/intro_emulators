@@ -2,15 +2,15 @@
 
 Welcome to a short course that covers introductory emulation using R. 
 
-All the slides for the course are available in pdf format in the `slides` folder. The videos associated with the slides are shown below, and the code in the `code` folder.
+All the slides for the course are available in pdf format in the [`slides`](https://github.com/andrewcparnell/intro_emulators/tree/master/slides) folder. The videos associated with the slides are shown below. The code associated with the two examples provided is in the [`code`](https://github.com/andrewcparnell/intro_emulators/tree/master/code) folder.
 
 Sessions:
 
- 1. Overview | [stream video](https://github.com) | [download video](https://github.com) 
- 2. Emulators and Design | [stream video](https://github.com) | [download video](https://github.com) 
- 3. Building Emulators | [stream video](https://github.com) | [download video](https://github.com) 
- 4. Plotting, Checking, and Calibrating Emulators | [stream video](https://github.com) | [download video](https://github.com) 
- 5. Deploying and Extending the Emulator | [stream video](https://github.com) | [download video](https://github.com) 
+ 1. Overview - [stream video](https://media.heanet.ie/page/34a0a93694db46e7ba6f700bd6e5a188) - [download video](https://media.heanet.ie/download/34a0a93694db46e7ba6f700bd6e5a188) 
+ 2. Emulators and Design - [stream video](https://media.heanet.ie/page/749aa3decd294c5cb683cff4b2536f97) - [download video](https://media.heanet.ie/download/749aa3decd294c5cb683cff4b2536f97) 
+ 3. Building Emulators - [stream video](https://github.com) - [download video](https://github.com) 
+ 4. Plotting, Checking, and Calibrating Emulators - [stream video](https://github.com) - [download video](https://github.com) 
+ 5. Deploying and Extending the Emulator - [stream video](https://github.com) - [download video](https://github.com) 
 
 You should watch the videos above first and then try to follow the code by downloading the software and running it yourself whilst watching the videos. 
 
@@ -18,7 +18,7 @@ You should watch the videos above first and then try to follow the code by downl
 
 To get started make sure you have downloaded [R](https://www.r-project.org) and [Rstudio](https://rstudio.com/products/rstudio/download/).
 
-Then, open up Rstudio and in the Console window type:
+Then open up Rstudio and in the Console window type:
 `install.packages(c('GPfit', 'ggplot2', 'lhs'))`
 
 To be able to run the larger example, you will need to download and install [docker](https://www.docker.com). If you are running Windows you might need to install [these additional steps](https://blog.jayway.com/2017/04/19/running-docker-on-bash-on-windows/).

@@ -87,7 +87,7 @@ ggplot(df, aes(x1, x2, z = y)) +
 
 ## Assumptions
 
-  - You can run the simulator a few times but now too many as they are usually slow to run (which is why you want an emulator)
+  - You can run the simulator a few times but not too many as they are usually slow to run (which is why you want an emulator)
   - The outputs of the simulator are identical for the same inputs; it is a __deterministic__ simulator
   - The outputs of the simulator are smooth, i.e. similar for similar values of the inputs
 

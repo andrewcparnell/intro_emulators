@@ -58,7 +58,7 @@ ggplot(as.data.frame(X), aes(x = V1, y = V2)) +
   geom_point()
 ```
 
-This is bad because we might miss lunch chunks of the input space; and it gets worse in higher dimensions
+This is bad because we might miss large chunks of the input space; and it gets worse in higher dimensions
 
 ## Bad idea number 2 - grids
 
@@ -72,7 +72,7 @@ ggplot(as.data.frame(X), aes(x = Var1, y = Var2)) +
   geom_point()
 ```
 
-... but this is also bad because (a) one or more of the variables might not be important (so harder to identify non-linear effects), and (b) we might have better information about the likely values of the variables
+... but this is also bad because (a) one or more of the variables might not be important (so harder to identify non-linear effects)
 
 ## Bad idea number 3 - traditional design
 
