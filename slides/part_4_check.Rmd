@@ -232,17 +232,15 @@ qplot(loo_fit, df_grid$out, geom = "point") +
   ylab("True value")
 ```
 
-## Calibrating the emulator will real-world observations
+## Calibrating the emulator with real-world observations
 
-- Sometimes in addition to the emulator values we also have real-world on the process
-
-- We thus want to check whether the real world data match the emulator and whether there are systematic biases
+- Sometimes in addition to the emulator values we also have real-world observations on the process. We thus want to check whether the real world data match the emulator and whether there are systematic biases
 
 - The usual equation people fit is:
 
-$$y(X) = m(X) + \delta(X) + \epsilon$$
+$$\tilde{y}(X) = m(X) + \delta(X) + \epsilon$$
 
-- Where $X$ are our inputs and $y$ our output
+- Where $X$ are our inputs and $\tilde{y}$ our real world observations (*not* our simulator output)
 - $m$ is the emulator (already fitted)
 - $\delta(x)$ is another GP representing systematic bias
 - $\epsilon$ is a pure noise error term representing observation error
